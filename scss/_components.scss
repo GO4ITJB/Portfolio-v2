@@ -1,0 +1,378 @@
+// anything reusable such as buttons, navbars, cards etc.
+
+// ******NAV******
+.nav {
+  width: 100%;
+  padding: 0 2rem;
+  position: absolute;
+  top: 0; 
+  left: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 70px;
+  z-index: 1000;
+
+  &__logo-link {
+    margin-right: auto;
+    text-align: center;
+  }
+
+  &__toggler {
+    display: none;
+  }
+
+  &__btn {
+    z-index: 2000;
+    cursor: pointer;
+  }
+
+  &__background {
+    height: 10px;
+    width: 10px;
+    position: fixed;
+    top: 25px;
+    right: 30px;
+    background-image: radial-gradient(#375f6d, #203a43);
+    border-radius: 50%;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.86, -0.55, 0.265, 1.55); // Menu background speed
+  }
+
+  &__menu {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0; //Make it dissapear to the top, also change checked value
+    right: -100%; //Make it dissapear to the right, also change checked value
+    //left: -100%;     //Make it dissapear to the left, also change checked value
+    //bottom: -100%;   //Make it dissapear to the bottom, also change checked value
+
+    z-index: 1500;
+    transition: all 0.5s cubic-bezier(0.86, -0.55, 0.265, 1.55); // Menu speed
+  }
+
+  &__list {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+    margin-top: -40px;
+  }
+
+  &__link {
+    &:link,
+    &:visited {
+      display: inline-block;
+      font-size: 1.2rem;
+      color: #fff;
+      padding: 20px 40px;
+      text-transform: uppercase;
+      font-weight: 300;
+      text-decoration: none;
+      background-image: linear-gradient(
+        120deg,
+        transparent 0%,
+        transparent 50%,
+        #fff 50%
+      );
+      background-size: 250%;
+      transition: all 0.1s ease-in-out;
+    }
+
+    &:hover,
+    &:active {
+      background-position: 100%;
+      color: #000;
+      transform: translateX(10px);
+    }
+  }
+
+  // <----NOW U SEE IT..(magic)..NOW U DON'T---->
+  // ~that is the sibling selector
+  &__toggler:checked ~ &__background {
+    transform: scale(5000);
+    opacity: 1;
+  }
+
+  &__toggler:checked ~ &__menu {
+    right: 0;
+  }
+
+  // <---ICON--->
+
+  &__ham-icon {
+    position: relative;
+    margin-top: 8px;
+
+    &,
+    &:before,
+    &:after {
+      width: 25px;
+      height: 1px;
+      background-color: #fff;
+      display: inline-block;
+    }
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      transition: all .2s;
+    }
+
+    &:before {
+      top: -6px;
+    } // Always double up on the space
+    &:after {
+      top: 6px;
+    }
+  }
+
+  // Line animation
+  &__btn:hover &__ham-icon:before{
+    top: -8px;
+  }
+  
+  &__btn:hover &__ham-icon:after{
+    top: 8px;
+  }
+
+  &__toggler:checked + &__btn &__ham-icon {
+    background-color: transparent;
+  }
+
+  &__toggler:checked + &__btn {
+    position: fixed;
+  }
+
+  &__toggler:checked + &__btn &__ham-icon:before {
+    top: 0;
+    transform: rotate(135deg);
+  }
+
+  &__toggler:checked + &__btn &__ham-icon:after {
+    top: 0;
+    transform: rotate(-135deg);
+  }
+}
+
+// BUTTONS
+.btn {
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 10px;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: all 0.5s ease-in-out;
+  display: block;
+
+  &:hover {
+    background-color: #fff;
+    color: #000;
+  }
+
+  &--logo {
+    padding: 5px;
+  }
+
+  &--hero {
+    z-index: 1;
+    display: inline-block;
+  }
+
+  &--form {
+    margin-top: 10px;
+    color: #000;
+    background: #fff;
+  }
+}
+
+// PROGRESS BAR
+.progress {
+  padding: 20px;
+  width: 100%;
+  background: #fff;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  font-family: Poppins;
+
+  &__bar {
+    margin: 20px 0;
+
+    &:first-child {
+      margin-top: 0px;
+    }
+  }
+  &__info {
+    margin-bottom: 5px;
+
+    span {
+      font-weight: 500;
+      font-size: 17px;
+      opacity: 0;
+      animation: showText 0.5s 1s linear forwards;
+    }
+
+    @keyframes showText {
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__line {
+    height: 10px;
+    width: 100%;
+    background: #f0f0f0;
+    position: relative;
+    transform: scaleX(0);
+    transform-origin: left;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05),
+      0 1px rgba(255, 255, 255, 0.8);
+    animation: animate 1s cubic-bezier(1, 0, 0.5, 1) forwards;
+
+    span {
+      height: 100%;
+      position: absolute;
+      border-radius: 10px;
+      transform: scaleX(0);
+      transform-origin: left;
+      background: linear-gradient(-45deg, #1f647b, #203a43);
+      animation: animate 1s 1s cubic-bezier(1, 0, 0.5, 1) forwards;
+    }
+
+    @keyframes animate {
+      100% {
+        transform: scaleX(1);
+      }
+    }
+
+    &.html span {
+      width: 90%;
+    }
+    &.css span {
+      width: 85%;
+    }
+    &.javascript span {
+      width: 45%;
+    }
+    &.resp-design span {
+      width: 95%;
+    }
+    &.mysql span {
+      width: 75%;
+    }
+
+    span:before {
+      position: absolute;
+      content: "";
+      top: -10px;
+      right: 0;
+      height: 0;
+      width: 0;
+      border: 7px solid transparent;
+      border-bottom-width: 0px;
+      border-right-width: 0px;
+      border-top-color: #000;
+      opacity: 0;
+      animation: showText2 0.5s 1.5s linear forwards;
+    }
+
+    span:after {
+      position: absolute;
+      top: -28px;
+      right: 0;
+      font-weight: 500;
+      background: #000;
+      color: #fff;
+      padding: 1px 8px;
+      font-size: 12px;
+      border-radius: 3px;
+      opacity: 0;
+      animation: showText2 0.5s 1.5s linear forwards;
+    }
+
+    &.html span:after {
+      content: "Kickass";
+    }
+    &.css span:after {
+      content: "Kickass";
+    }
+    &.javascript span:before {
+      transform: rotateY(180deg);
+      right: -8.9px;
+    }
+    &.javascript span:after {
+      right: -69px;
+      content: "Average";
+    }
+    &.resp-design span:after {
+      content: "Rockstar";
+    }
+    &.mysql span:after {
+      content: "Almost kickass";
+    }
+
+    @keyframes showText2 {
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 740px) {
+  .nav {
+    &__menu {
+      height: 100vh;
+      width: 100vw; // menu width
+    }
+
+    &__toggler:checked ~ &__menu-bg {
+      height: 100vh;
+      width: 100vw; // menu width
+      transition: all 1s;
+    }
+
+    &__link {
+      &:link,
+      &:visited {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .progress {
+    &__line {
+      &.javascript span:before {
+        transform: unset;
+        right: 0;
+      }
+      &.javascript span:after {
+        right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .nav{
+    &__link {
+      &:link,
+      &:visited {
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+}
